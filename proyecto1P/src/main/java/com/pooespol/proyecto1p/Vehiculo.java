@@ -1,4 +1,4 @@
-package com.pooespol;
+package com.pooespol.proyecto1p;
 
 import java.util.ArrayList;
 
