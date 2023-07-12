@@ -74,7 +74,7 @@ public abstract class Usuario {
         this.organizacion = organizacion;
     }
     
-    public abstract boolean validarUsuario(); 
+    public abstract boolean validarCredenciales(); 
 
     
 }
