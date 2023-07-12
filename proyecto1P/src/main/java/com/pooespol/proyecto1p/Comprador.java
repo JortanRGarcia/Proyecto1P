@@ -18,7 +18,7 @@ public class Comprador {
         this.ofertas = ofertas;
     }
 
-    public boolean validarUsuario() {
+    public boolean validarCredenciales() {
         
     }
 }
