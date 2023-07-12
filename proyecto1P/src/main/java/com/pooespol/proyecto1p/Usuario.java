@@ -9,7 +9,7 @@ package com.pooespol.proyecto1p;
  *
  * @author jorgs
  */
-public class Usuario {
+public abstract class Usuario {
     protected int id;
     protected String nombres;
     protected String apellidos;
@@ -74,8 +74,7 @@ public class Usuario {
         this.organizacion = organizacion;
     }
     
-    public boolean validarUsuario() {
-        
-    }
+    public abstract boolean validarUsuario(); 
+
     
 }
