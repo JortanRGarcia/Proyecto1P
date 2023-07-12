@@ -10,5 +10,5 @@ package com.pooespol.proyecto1p;
  * @author jorgs
  */
 public class Auto extends Vehiculo {
-    
+    hol ake hace
 }
