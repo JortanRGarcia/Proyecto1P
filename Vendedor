@@ -1,0 +1,3 @@
+Public class Vendedor extends Usuario {
+  private String nombres;
+  private  String apellidos;
