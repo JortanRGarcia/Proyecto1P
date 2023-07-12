@@ -74,6 +74,8 @@ public class Usuario {
         this.organizacion = organizacion;
     }
     
-    
+    public boolean validarUsuario() {
+        
+    }
     
 }
