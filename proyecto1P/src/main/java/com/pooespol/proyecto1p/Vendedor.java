@@ -51,7 +51,7 @@ public class Vendedor extends Usuario {
         System.out.println("Ingrese su clave: ");
         String clave = scanner.nextLine();
 
-        if (!validarCredenciales(correo, clave)) {
+        if (!super.validarUsuario(correo, clave)) {
             System.out.println("Credenciales inválidas.");
             return;
         }
