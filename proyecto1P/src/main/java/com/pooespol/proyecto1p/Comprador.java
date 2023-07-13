@@ -37,20 +37,67 @@ public class Comprador extends Usuario{
     public void setOfertas(ArrayList<Oferta> ofertas) {
         this.ofertas = ofertas;
     }
+       
     
-    public static void registrarComprador(String[] s) {
-        Comprador comprador = new Comprador(nextId, s[0], s[1], s[2], s[3], s[4]);
+    public static void registrar(String[] s) {
+        if(correoYaExiste(s[2])) {
+            System.out.println("El correo ya se encuentra en uso.");
+        } else {
+            Comprador comprador = new Comprador(nextId, s[0], s[1], s[2], s[3], s[4]);
+        }       
     }
-
-    //validar credenciales no esta terminado
-    @Override
-    public boolean validarCredenciales() {
+       
+    private static boolean correoYaExiste(String correo) {
+        File archivo = new File(COMPRADOR_FILE);
+        if(!archivo.exists()) {
+            return false;
+        }       
+        try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
+            String linea;
+            while((linea = reader.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes[3].equals(correo)) {
+                    return true;
+                }
+            }             
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    public static boolean validarCredenciales() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Ingrese su direccion de correo:");
-        String correo = sc.nextLine();
-        //buscar en el archivo que el correo exista.
+        File archivo = new File(COMPRADOR_FILE);
         
-        return true;
+        if (archivo.exists()) {
+            System.out.println("Ingrese su dirección de correo: ");
+            String correo = sc.nextLine();
+            System.out.println("Ingrese su contraseña:");
+            String clave = sc.nextLine();
+            try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
+                String linea;
+                while((linea = reader.readLine()) != null) {
+                    String[] partes = linea.split(",");
+                    if (partes[3].equals(correo)) {
+                        if (Utilitaria.convertirHash(clave).equals(partes[5])){
+                            System.out.println("Inicio de sesion éxitoso");
+                            return true;
+                        } else {
+                            System.out.println("Contraseña Incorrecta");
+                            return false;
+                        }
+                    }                     
+                }
+                System.out.println("No se encuentra el correo registrado.");
+                return false;
+                
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        System.out.println("Ha Ocurrido un error.");               
+        return false;
     }
     
     private static int cargarUltimoId() {
