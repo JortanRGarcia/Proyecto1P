@@ -38,19 +38,8 @@ public class Comprador extends Usuario{
         this.ofertas = ofertas;
     }
     
-    public static void registrarComprador(Scanner sc) {
-        sc.nextLine();
-        System.out.println("Ingrese sus nombres: ");
-        String nombres = sc.nextLine();
-        System.out.println("Ingrese sus apellidos: ");
-        String apellidos = sc.nextLine();
-        System.out.println("Ingrese su correo: ");
-        String correo = sc.nextLine();
-        System.out.println("Ingrese su organizacion: ");
-        String org = sc.nextLine();
-        System.out.println("Ingrese su clave:");
-        String clave = sc.nextLine();       
-        Comprador nuevoComprador = new Comprador(nextId,nombres,apellidos,correo,org,clave);                    
+    public static void registrarComprador(String[] s) {
+        Comprador comprador = new Comprador(nextId, s[0], s[1], s[2], s[3], s[4]);
     }
 
     //validar credenciales no esta terminado
