@@ -1,3 +1,4 @@
+import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -112,8 +113,6 @@ public class Vendedor extends Usuario {
             System.out.println("Precio: ");
             double precio = scanner.nextDouble();
             scanner.nextLine(); 
-
-            // Crear el objeto Vehiculo con los datos ingresados
             Vehiculo vehiculo = new Vehiculo(placa, marca, modelo, tipoMotor, año, recorrido, color, tipoCombustible,
                     vidrios, transmision, traccion, precio);
 
@@ -130,14 +129,37 @@ public class Vendedor extends Usuario {
         
         return true; 
 
-    private boolean existePlaca(String placa) {
-        // Verificar si la placa ya existe en el sistema
-        // Implementa aquí tu lógica de verificación de existencia de placa
-
+    private boolean existePlaca(String placa) throws IOException {
+     BufferedReader reader = new BufferedReader(new FileReader("vehiculos.txt"));
+     String line;
+     while ((line = reader.readLine()) != null) {
+        String[] values = line.split(",");
+        if (values[5].equals(placa)) {
+            reader.close();
+            return true
+        }
     }
-
+    reader.close();
+    return false; 
+    }
+@Override
+public String toString() {
+    return id + "," +
+           idVendedor + "," +
+           ofertas + "," +
+           vendedor + "," +
+           placa + "," +
+           marca + "," +
+           modelo + "," +
+           tipoDeMotor + "," +
+           anio + "," +
+           recorrido + "," +
+           color + "," +
+           tipoDeCombustible + "," +
+           precio;
+}
     private void guardarVehiculo(Vehiculo vehiculo) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(VEHICULO_FILE, true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("vehiculos.txt", true))) {
             writer.write(vehiculo.toString());
             writer.newLine();
         } catch (IOException e) {
