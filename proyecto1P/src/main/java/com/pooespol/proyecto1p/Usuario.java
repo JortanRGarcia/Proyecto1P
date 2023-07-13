@@ -76,5 +76,19 @@ public abstract class Usuario {
     
     public abstract boolean validarCredenciales(); 
 
-    
+    public static String[] registrar(Scanner sc) {
+        sc.nextLine();
+        System.out.println("Ingrese sus nombres: ");
+        String nombres = sc.nextLine();
+        System.out.println("Ingrese sus apellidos: ");
+        String apellidos = sc.nextLine();
+        System.out.println("Ingrese su correo: ");
+        String correo = sc.nextLine();
+        System.out.println("Ingrese su organizacion: ");
+        String org = sc.nextLine();
+        System.out.println("Ingrese su clave:");
+        String clave = sc.nextLine();  
+        
+        return new String[] {nombres,apellidos,correo,org,clave};
+   }
 }
