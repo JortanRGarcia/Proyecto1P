@@ -29,6 +29,14 @@ public class Comprador extends Usuario{
     public Comprador(int id, String nombres, String apellidos, String correo, String organizacion, String clave) {
         this(nextId++, nombres, apellidos, correo, organizacion, clave, new ArrayList<Oferta>());
     }
+
+    public ArrayList<Oferta> getOfertas() {
+        return ofertas;
+    }
+
+    public void setOfertas(ArrayList<Oferta> ofertas) {
+        this.ofertas = ofertas;
+    }
     
     public static void registrarComprador(Scanner sc) {
         sc.nextLine();
