@@ -15,33 +15,12 @@ public class Vendedor extends Usuario {
         this.vehiculos = vehiculos;
     }
 
-    public void registrarVendedor() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Ingrese los siguientes datos:");
-        System.out.print("Nombres: ");
-        String nombres = scanner.nextLine();
-        System.out.print("Apellidos: ");
-        String apellidos = scanner.nextLine();
-        System.out.print("Organización: ");
-        String organizacion = scanner.nextLine();
-        System.out.print("Correo Electrónico: ");
-        String correo = scanner.nextLine();
-
-        if (existeCorreo(correo)) {
-            System.out.println("El correo ya está registrado.");
-            return;
-        }
-
-        System.out.print("Clave: ");
-        String clave = scanner.nextLine();
-        String hashClave = generarHash(clave);
+   @Override
+    protected Usuario crearUsuario(String nombres, String apellidos, String correo, String clave, String organizacion) {
         int nuevoId = obtenerNuevoId();
-        Vendedor nuevoVendedor = new Vendedor(nuevoId, nombres, apellidos, correo, hashClave, organizacion);
-        ListaVendedores.agregarVendedor(nuevoVendedor);
-
-        System.out.println("Registro exitoso.");
+        return new Vendedor(nuevoId, nombres, apellidos, correo, clave, organizacion);
     }
+
 
     public void ingresarNuevoVehiculo() {
         Scanner scanner = new Scanner(System.in);
