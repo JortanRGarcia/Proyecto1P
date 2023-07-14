@@ -73,8 +73,7 @@ public abstract class Usuario {
     public void setOrganizacion(String organizacion) {
         this.organizacion = organizacion;
     }
-    
-    public abstract boolean validarCredenciales(); 
+        
 
     public static String[] registrar(Scanner sc) {
         sc.nextLine();
