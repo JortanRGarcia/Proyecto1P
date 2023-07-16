@@ -104,7 +104,7 @@ public class Oferta {
         return ofertasFiltradas;
     }
     
-    public static int menuOferta() {
+    public static int menuOferta() throws IOException {
         Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese la placa:");
         String placa = sc.nextLine();
@@ -142,12 +142,30 @@ public class Oferta {
                     }
                     break;
                 case 3:
-                    return c+1;                   
+                    eliminarOfertasPorPlaca(placa);
+                    int idVendedor=Vendedor.validarCredenciales();       
+                    if (idVendedor == 0) {
+                        System.out.println("Credenciales de vendedor incorrectas. No se puede enviar el correo.");
+                    }else{
+                        Utilitaria.enviarCorreo(correo_comprador,idVendedor);   
+                    }
+                    return c+1;                 
                 default:
                     break;
             }                                           
         } while (opcion != 4);
         return -1;
     }    
+    private static void eliminarOfertasPorPlaca(String placa) throws IOException {
+    ArrayList<String[]> ofertas = Archivo.listaLinea(OFERTA_FILE);
+    ArrayList<String[]> ofertasActualizadas = new ArrayList<>(); 
+    for (String[] oferta : ofertas) {
+        if (!oferta[2].equals(placa)) {
+            ofertasActualizadas.add(oferta);
+        }
+    }
+   
+    Archivo.guardarListaLinea(OFERTA_FILE, ofertasActualizadas);
+    } 
 }
 
