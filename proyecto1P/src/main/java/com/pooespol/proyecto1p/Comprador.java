@@ -18,7 +18,7 @@ public class Comprador extends Usuario{
     private ArrayList<Oferta> ofertas;
     
     public Comprador(int id, String nombres, String apellidos, String correo, String organizacion, String clave, ArrayList<Oferta> ofertas) {
-        super(nextId, nombres, apellidos, correo, organizacion, clave);
+        super(nextId++, nombres, apellidos, correo, organizacion, clave);
         this.ofertas = ofertas;
         guardarCompradorEnArchivo();
     }
