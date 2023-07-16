@@ -6,7 +6,7 @@ import java.util.Scanner;
  *
  * @author User
  */
-public class ProyectoParcial {
+public class Proyecto1p {
 
     public static void main(String[] args) {
         
