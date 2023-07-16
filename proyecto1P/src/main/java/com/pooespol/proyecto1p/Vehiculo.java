@@ -1,8 +1,23 @@
 package com.pooespol.proyecto1p;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Scanner;
 
+/**
+ *
+ * @author User
+ */
 public class Vehiculo {
+    protected static final String VEHICULO_FILE = "vehiculos.txt";
+    
+    protected static int nextId = Archivo.cargarUltimoId(VEHICULO_FILE);
+    
     protected int id;
     protected int idVendedor;
     protected ArrayList<Oferta> ofertas;
@@ -11,30 +26,30 @@ public class Vehiculo {
     protected String marca;
     protected String modelo;
     protected String tipoDeMotor;
-    protected String anio;
+    protected String ano;
     protected double recorrido;
     protected String color;
     protected String tipoDeCombustible;
     protected double precio;
 
-    public Vehiculo(int id, int idVendedor, ArrayList<Oferta> ofertas, Vendedor vendedor, String placa, String marca, String modelo, String tipoDeMotor, String anio, double recorrido, String color, String tipoDeCombustible, double precio) {
+    public Vehiculo(int id, int idVendedor, ArrayList<Oferta> ofertas,String placa, String marca, String modelo, String tipoDeMotor, String ano, double recorrido, String color, String tipoDeCombustible, double precio) {
         this.id = id;
         this.idVendedor = idVendedor;
-        this.ofertas = ofertas;
-        this.vendedor = vendedor;
+        this.ofertas = ofertas;      
         this.placa = placa;
         this.marca = marca;
         this.modelo = modelo;
         this.tipoDeMotor = tipoDeMotor;
-        this.anio = anio;
+        this.ano = ano;
         this.recorrido = recorrido;
         this.color = color;
         this.tipoDeCombustible = tipoDeCombustible;
         this.precio = precio;
+        
     }
-
-    public Vehiculo(int id, int idVendedor, Vendedor vendedor, String placa, String marca, String modelo, String tipoDeMotor, String anio, double recorrido, String color, String tipoDeCombustible, double precio) {
-        this(id, idVendedor, new ArrayList<Oferta>(), vendedor, placa, marca, modelo, tipoDeMotor, anio, recorrido, color, tipoDeCombustible, precio);
+    
+    public Vehiculo(int id, int idVendedor, String placa, String marca, String modelo, String tipoDeMotor, String ano, double recorrido, String color, String tipoDeCombustible, double precio) {
+        this(nextId, idVendedor, new ArrayList<Oferta>(), placa, marca, modelo, tipoDeMotor, ano, recorrido, color, tipoDeCombustible, precio );
     }
 
     public int getId() {
@@ -47,7 +62,7 @@ public class Vehiculo {
 
     public int getIdVendedor() {
         return idVendedor;
-    }    
+    }
 
     public void setIdVendedor(int idVendedor) {
         this.idVendedor = idVendedor;
@@ -139,5 +154,150 @@ public class Vehiculo {
 
     public void setPrecio(double precio) {
         this.precio = precio;
+    }
+    
+    public static String[] registrar(Scanner sc) {              
+        System.out.println("Ingrese las caracteristicas del vehículo:");
+        System.out.println("Placa:");
+        String placa = sc.nextLine();
+        
+        System.out.println("Marca:");
+        String marca = sc.nextLine();
+        
+        System.out.println("Modelo:");
+        String modelo = sc.nextLine();
+        
+        System.out.println("Tipo de motor:");
+        String tipoDeMotor = sc.nextLine();
+        
+        System.out.println("Año de fabricación: ");
+        String ano = sc.nextLine();
+        
+        System.out.println("Recorrido:");
+        String recorrido = sc.nextLine();        
+        
+        System.out.println("Color:");
+        String color = sc.nextLine();
+        
+        System.out.println("Tipo de combustible:");
+        String tipoDeCombustible = sc.nextLine();
+        
+        System.out.println("Precio (Con dos decimales)");
+        String precio = sc.nextLine();
+            
+        return new String[] {placa, marca, modelo, tipoDeMotor, ano, recorrido, color, tipoDeCombustible, precio};    
+    }
+    
+    public static void registrarVehiculo(String[] c) {
+        int idVen = Vendedor.validarCredenciales();  
+        if (!Archivo.placaYaExiste(VEHICULO_FILE, c[0])) {
+            if (idVen != 0) {
+                Vehiculo vehiculo = new Vehiculo(nextId++, idVen, c[0], c[1], c[2], c[3], c[4], Double.parseDouble(c[5]), c[6], c[7], Double.parseDouble(c[8]));
+                vehiculo.guardarVehiculoEnArchivo();
+            }
+        } else {
+            System.out.println("Ese vehiculo ya esta registrado.");
+        }
+    }
+        
+    
+    protected void guardarVehiculoEnArchivo() {
+        File archivo = new File(VEHICULO_FILE);
+        if(!archivo.exists()) {
+            try {
+                archivo.createNewFile();                
+            } catch(IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        try (PrintWriter writer = new PrintWriter(new FileWriter(VEHICULO_FILE, true))) {
+            writer.println(this.toString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        for (Oferta o:this.ofertas) {
+            if(ofertas.indexOf(o) != ofertas.size()-1) {
+                s.append(o.getId());
+                s.append("/");
+            } else {
+                s.append(o.getId());
+            }            
+        }        
+        return this.id+","+this.idVendedor+","+s+","+this.placa+","+this.marca+","+this.modelo+","+this.tipoDeMotor+","+this.ano+","+this.recorrido+","+this.color+","+this.tipoDeCombustible+","+this.precio;   
+    }
+    
+    
+    
+    private static void mostrarVehiculo(String[] s) {
+        String[] texto = {"Placa:","Marca:","Modelo:","Tipo de motor:","Año de fabricación:","Recorrido:","Color:","Tipo de combustible:","precio", "Vidrios:", "Transmisión:", "Tracció:"};
+        int n = 0;
+        while(n < s.length - 3) {
+            System.out.println(texto[n]);
+            System.out.println(s[3+n]);
+            n++;
+        }
+    }
+    
+    public static int mostrarVehiculos() {
+        ArrayList<String[]> vehiculos = Archivo.listaLinea(VEHICULO_FILE);
+        Scanner sc = new Scanner(System.in);
+        int opcion;
+        int c = 0;
+        
+        do {
+            System.out.println("Vehiculo #" + (c+1));
+            mostrarVehiculo(vehiculos.get(c));
+            System.out.println("""
+                               1. Siguiente
+                               2. Regresar
+                               3. Ofertar
+                               4. Salir""");
+            opcion = sc.nextInt();
+            
+            switch (opcion) {
+                case 1:
+                    if(c!=vehiculos.size()-1){
+                        c++;
+                    } else {
+                        System.out.println("No puede avanzar");
+                    }
+                    break;
+                case 2:
+                    if(c!=0) {
+                        c--;
+                    } else {
+                        System.out.println("No puede retroceder");
+                    }
+                    break;
+                case 3:
+                    return c+1;                   
+                default:
+                    break;
+            }                         
+        } while (opcion != 4);
+        return -1;
+    }
+    
+    public static String[] buscarVehiculo(String placa) {
+        File archivo = new File(VEHICULO_FILE);
+        if(archivo.exists()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(VEHICULO_FILE))) {
+                String linea;
+                while((linea = reader.readLine()) != null) {
+                    String[] partes = linea.split(",");
+                    if (placa.equals(partes[3])) {
+                        return new String[] {partes[0], partes[4], partes[5], partes[6], partes[11]};
+                    }
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return new String[0];
     }
 }
