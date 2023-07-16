@@ -1,14 +1,16 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
+package com.pooespol.proyecto1p;
+
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
-
+/**
+ *
+ * @author User
+ */
 public class Vendedor extends Usuario{
     private final static String VENDEDOR_FILE = "vendedores.txt";
     
@@ -42,8 +44,16 @@ public class Vendedor extends Usuario{
         }       
     }
     
-    public static boolean validarCredenciales() {
-        return Archivo.validarCredenciales(VENDEDOR_FILE);
+    public static int validarCredenciales() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Ingrese su dirección de correo: ");
+        String correo = sc.nextLine();
+        System.out.println("Ingrese su contraseña:");
+        String clave = sc.nextLine();
+        if(Archivo.validarCredenciales(VENDEDOR_FILE, correo, clave)) {
+            return Archivo.buscarIdUsuario(correo, VENDEDOR_FILE);
+        }
+        return 0;
     }
     
     private void guardarVendedorEnArchivo() {
@@ -76,7 +86,6 @@ public class Vendedor extends Usuario{
         }
         
         return this.id +","+this.nombres+","+this.apellidos+","+this.correo+","+this.organizacion+","+Utilitaria.convertirHash(this.clave)+","+s;
-    }
+    }        
 }
-
         
