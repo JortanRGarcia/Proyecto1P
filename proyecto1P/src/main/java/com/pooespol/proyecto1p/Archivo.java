@@ -139,8 +139,10 @@ public class Archivo {
                 String linea;
                 while((linea = reader.readLine())!= null) {
                     String[] partes = linea.split(",");
-                    if (idUsuario.equals(partes[0]));
-                    return partes[3];
+                    int id = Integer.parseInt(partes[0]);
+                    String correo = partes[3];
+                    if (id == idVendedor) {
+                        return correo;
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
