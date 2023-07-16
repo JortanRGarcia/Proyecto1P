@@ -3,10 +3,8 @@ package com.pooespol.proyecto1p;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Scanner;
+import java.util.ArrayList;
 
 /**
  *
@@ -45,20 +43,35 @@ public class Archivo {
                 }
             }             
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return false;
     }
     
-    public static boolean validarCredenciales(String file) {
-        Scanner sc = new Scanner(System.in);
+    public static boolean placaYaExiste(String file, String placa) {
+        File archivo = new File(file);
+        if(!archivo.exists()) {
+            return false;
+        }
+        try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
+            String linea;
+            while((linea = reader.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes[3].equals(placa)) {
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
+    }
+    
+    public static boolean validarCredenciales(String file, String correo, String clave) {        
         File archivo = new File(file);
         
         if (archivo.exists()) {
-            System.out.println("Ingrese su dirección de correo: ");
-            String correo = sc.nextLine();
-            System.out.println("Ingrese su contraseña:");
-            String clave = sc.nextLine();
+            
             try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
                 String linea;
                 while((linea = reader.readLine()) != null) {
@@ -82,5 +95,57 @@ public class Archivo {
         }
         System.out.println("Ha Ocurrido un error.");               
         return false;
+    }
+    
+    public static int buscarIdUsuario(String correo, String file) {
+        File archivo = new File(file);
+        if (archivo.exists()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
+                String linea;
+                while((linea = reader.readLine()) != null) {
+                    String[] partes = linea.split(",");
+                    if (partes[3].equals(correo)) {
+                        return Integer.parseInt(partes[0]);
+                    }
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return 0;
+    }
+    
+    
+    public static ArrayList<String[]> listaLinea(String file) {
+        ArrayList<String[]> lineasSplit = new ArrayList<>();
+        
+        File archivo = new File(file);
+        try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
+            String linea;
+            while((linea = reader.readLine()) != null) {
+                String[] partes = linea.split(",");
+                lineasSplit.add(partes);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return lineasSplit;
+    }
+    
+    public static String buscarCorreo(String file, String idUsuario) {
+        File archivo = new File(file);
+        if (archivo.exists()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
+                String linea;
+                while((linea = reader.readLine())!= null) {
+                    String[] partes = linea.split(",");
+                    if (idUsuario.equals(partes[0]));
+                    return partes[3];
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return null;
     }
 }
