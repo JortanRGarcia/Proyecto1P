@@ -12,7 +12,7 @@ import java.util.Scanner;
  * @author User
  */
 public class Vendedor extends Usuario{
-    private final static String VENDEDOR_FILE = "vendedores.txt";
+     static final String VENDEDOR_FILE = "vendedores.txt";
     
     private static int nextId = Archivo.cargarUltimoId(VENDEDOR_FILE);
     
