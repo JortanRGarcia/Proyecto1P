@@ -80,7 +80,8 @@ public class Proyecto1p {
                     }
                     break;
                     
-                case 3:                    
+                case 3:   
+                    Vehiculo.mostrarVehiculos();
                     break;               
                 default:
                     break;
