@@ -1,14 +1,11 @@
 package com.pooespol.proyecto1p;
 
 import java.util.Scanner;
+import java.io.IOException;
 
-/**
- *
- * @author User
- */
 public class Proyecto1p {
 
-    public static void main(String[] args) {
+    public static void main(String[] args)throws IOException {
         
         Scanner sc = new Scanner(System.in);
         int op;
