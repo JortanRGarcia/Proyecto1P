@@ -9,16 +9,16 @@ public abstract class Usuario {
     protected String nombres;
     protected String apellidos;
     protected String correo;
-    protected String clave;
     protected String organizacion;
+    protected String clave;
 
-    public Usuario(int id, String nombres, String apellidos, String correo, String clave, String organizacion) {
+    public Usuario(int id, String nombres, String apellidos, String correo, String organizacion, String clave) {
         this.id = id;
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.correo = correo;
-        this.clave = clave;
         this.organizacion = organizacion;
+        this.clave = clave;
     }
 
     public int getId() {
