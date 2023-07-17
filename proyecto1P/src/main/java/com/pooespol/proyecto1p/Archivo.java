@@ -5,11 +5,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 
-/**
- *
- * @author User
- */
+
 public class Archivo {
     
    public static int cargarUltimoId(String file) {
@@ -139,10 +138,43 @@ public class Archivo {
                 String linea;
                 while((linea = reader.readLine())!= null) {
                     String[] partes = linea.split(",");
+                    if (idUsuario.equals(partes[0]));
+                    return partes[3];
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return null;
+    }
+    
+    public static void guardarListaLinea(String archivo, ArrayList<String[]> lista) throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivo))) {
+            for (String[] linea : lista) {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < linea.length; i++) {
+                    sb.append(linea[i]);
+                    if (i < linea.length - 1) {
+                        sb.append(",");
+                    }
+                }
+                writer.write(sb.toString());
+                writer.newLine();
+            }   
+        }
+    }
+    public static String buscarCorreoVendedorPorId(int idVendedor) {
+        File archivo = new File(Vendedor.VENDEDOR_FILE);
+        if (archivo.exists()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
+                String linea;
+                while ((linea = reader.readLine()) != null) {
+                    String[] partes = linea.split(",");
                     int id = Integer.parseInt(partes[0]);
                     String correo = partes[3];
                     if (id == idVendedor) {
                         return correo;
+                    }
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
