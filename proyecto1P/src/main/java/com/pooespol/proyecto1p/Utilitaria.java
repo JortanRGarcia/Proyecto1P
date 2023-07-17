@@ -4,11 +4,12 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.util.Properties;
+import java.util.Scanner;
 
-/**
- *
- * @author User
- */
 public class Utilitaria {
     
     public static String convertirHash(String clave) {
