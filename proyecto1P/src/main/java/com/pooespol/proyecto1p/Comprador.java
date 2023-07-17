@@ -1,8 +1,5 @@
 package com.pooespol.proyecto1p;
-/**
- *
- * @author User
- */
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
