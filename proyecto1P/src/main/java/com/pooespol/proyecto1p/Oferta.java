@@ -7,10 +7,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-/**
- *
- * @author User
- */
+
 public class Oferta {
     private final static String OFERTA_FILE = "ofertas.txt";
     
@@ -115,6 +112,10 @@ public class Oferta {
         
         ArrayList<String[]> oferta = filtrarOfertas(s);
         System.out.println(s[1]+" "+s[2]+ " " + s[3] + " Precio: " + s[4]);
+        if (oferta.isEmpty()){
+            System.out.println("No se han encontrado ofertas para esta placa");
+            return 0;
+        }else{
         System.out.println("Se han realizado " + oferta.size() + " ofertas.");
         do {
             System.out.println("Oferta #" + (c+1));
