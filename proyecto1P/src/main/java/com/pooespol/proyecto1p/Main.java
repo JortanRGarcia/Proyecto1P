@@ -10,7 +10,7 @@ public class Proyecto1p {
         Scanner sc = new Scanner(System.in);
         int op;
         int op2;        
-        
+    
         do {
             System.out.println("""
                                Menu de opciones:
