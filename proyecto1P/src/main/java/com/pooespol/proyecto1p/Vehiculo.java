@@ -9,10 +9,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-/**
- *
- * @author User
- */
+
 public class Vehiculo {
     protected static final String VEHICULO_FILE = "vehiculos.txt";
     
